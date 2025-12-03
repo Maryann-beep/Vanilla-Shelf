@@ -11,7 +11,8 @@ function capitalizeString(str){
 console.log(capitalizeString('collins cuban'))
 
 // C. destructuring with class keyword and constructor function
-class book{
+class Book{
+    //Constructor is a special method inside the class.
     constructor(title, author, pages){
     this.title = title;
     this.author = author;
@@ -20,13 +21,13 @@ class book{
 
 // D. Storage array to store book objects
     // myLibrary Array must be defined once, globally (at the top of my script) or a new, empty array is created every time the code runs.
-const myLibrary = [];
+const Library = [];
 
 // E. Rendering function
 function renderLibrary(){
     const library = document.getElementById('library-grid')
     library.innerHTML = ''
-    myLibrary.forEach(bookItem => {
+    Library.forEach(bookItem => {
         
 
         const bookCard = document.createElement('div');
@@ -44,9 +45,12 @@ function renderLibrary(){
         bookCard.appendChild(bookInfo);
         bookInfo.append(cardTitle, cardAuthor, cardPages);
 
-        cardTitle.textContent = bookItem.title;
-        cardAuthor.textContent = bookItem.author;
-        cardPages.textContent = bookItem.pages;
+        cardTitle.textContent = `${bookItem.title}`;
+        cardAuthor.textContent = `${bookItem.author}`;
+        cardPages.textContent = `${bookItem.pages} pages`;
+
+        // Append the finished card into the library grid (this was missing)
+        library.appendChild(bookCard);
     });
 }
 
@@ -66,7 +70,7 @@ bookForm.addEventListener('submit', (event) => {
         return;
     }
 
-    // B. Data Acquisition with object literals - Create a new book object
+    // B. Collect Data → object literals
     const bookData = {
     title: capitalizeString(title),
     author: capitalizeString(author),
@@ -74,13 +78,13 @@ bookForm.addEventListener('submit', (event) => {
 }
 console.log(bookData);
 
-// Destructuring bookData
+// Destructuring bookData to extract values from it.
 const {title:newTitle, author:newAuthor, pages:newPages} = bookData;
 
-// Creating the Instance
-const newBook = new book(newTitle, newTitle, newPages)
+// Creating the Instance - this is the real object created from the class blueprint 
+const newBook = new Book(newTitle, newAuthor, newPages)
 
-myLibrary.push(newBook);
+Library.push(newBook);
 renderLibrary();
 
 // Clear form fields after submission
@@ -88,5 +92,5 @@ renderLibrary();
     authorInput.value = '';
     noOfPagesInput.value = '';
 });
-    
+
 
